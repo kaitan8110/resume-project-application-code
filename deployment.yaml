@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-image-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-image-demo
+  template:
+    metadata:
+      labels:
+        app: nodejs-image-demo
+    spec:
+      containers:
+      - name: nodejs-image-demo
+        image: kaikai8110/nodejs-image-demo:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-image-demo-service
+spec:
+  selector:
+    app: nodejs-image-demo
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+
